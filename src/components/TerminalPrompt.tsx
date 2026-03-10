@@ -104,7 +104,7 @@ const TerminalPrompt = forwardRef<TerminalPromptHandle>(function TerminalPrompt(
   return (
     <div
       ref={containerRef}
-      className="w-full max-h-96 overflow-y-auto"
+      className="w-full max-h-[60vh] overflow-y-auto"
       onClick={() => inputRef.current?.focus()}
     >
       {history.map((line, i) => (

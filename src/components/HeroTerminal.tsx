@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import BootSequence from "@/components/BootSequence";
 import TerminalPrompt, { type TerminalPromptHandle } from "@/components/TerminalPrompt";
@@ -10,7 +10,7 @@ export default function HeroTerminal() {
   const terminalRef = useRef<TerminalPromptHandle>(null);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center p-4 sm:p-6 overflow-hidden">
+    <section className="relative min-h-screen flex items-start justify-center p-4 sm:p-6 pt-12 sm:pt-16 overflow-hidden">
       {/* Scanline overlay */}
       <div className="scanline fixed inset-0 z-10" />
 
@@ -20,7 +20,7 @@ export default function HeroTerminal() {
       </div>
 
       <motion.div
-        className="relative z-20 w-full max-w-5xl"
+        className="relative z-20 w-full max-w-6xl"
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6 }}>
@@ -40,7 +40,7 @@ export default function HeroTerminal() {
           </div>
 
           {/* Terminal body */}
-          <div className="p-5 sm:p-8 min-h-[560px] flex flex-col">
+          <div className="p-5 sm:p-8 min-h-[680px] flex flex-col">
             <AnimatePresence mode="wait">
               {!booted ?
               <motion.div key="boot" exit={{ opacity: 0 }}>
@@ -55,17 +55,7 @@ export default function HeroTerminal() {
                 className="flex flex-col gap-5 flex-1">
                 
                   {/* ASCII header */}
-                  <motion.pre
-                  className="text-foreground text-glow text-[10px] sm:text-sm leading-tight"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.8 }}>
-                  
-{`
- ╔═══════════════════════════════════════════════════════════╗
- ║   BOKEOM EOM  —  DevOps / Cloud Infrastructure Engineer   ║
- ╚═══════════════════════════════════════════════════════════╝`}
-                  </motion.pre>
+                  <AsciiHeader />
 
                   {/* Tagline */}
                   <motion.div
@@ -137,7 +127,7 @@ function TerminalButton({
 
 
 
-}: {icon: React.ReactNode;label: string;variant?: "default" | "accent";onClick?: () => void;}) {
+}: { icon: React.ReactNode; label: string; variant?: "default" | "accent"; onClick?: () => void }) {
   return (
     <motion.button
       whileHover={{ scale: 1.03 }}
@@ -152,9 +142,38 @@ function TerminalButton({
       "border-border bg-secondary/50 text-foreground hover:bg-secondary"}
       `
       }>
-      
       {icon}
       {label}
-    </motion.button>);
+    </motion.button>
+  );
+}
 
+const ASCII_FULL = `
+ ╔═══════════════════════════════════════════════════════════╗
+ ║   BOKEOM EOM  —  DevOps / Cloud Infrastructure Engineer   ║
+ ╚═══════════════════════════════════════════════════════════╝`;
+
+function AsciiHeader() {
+  const [displayed, setDisplayed] = useState("");
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      i++;
+      setDisplayed(ASCII_FULL.slice(0, i));
+      if (i >= ASCII_FULL.length) {
+        clearInterval(interval);
+        setDone(true);
+      }
+    }, 12);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <pre className="text-foreground text-glow text-[10px] sm:text-sm leading-tight">
+      {displayed}
+      {!done && <span className="animate-pulse text-primary">▋</span>}
+    </pre>
+  );
 }
