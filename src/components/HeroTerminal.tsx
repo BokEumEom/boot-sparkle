@@ -63,7 +63,7 @@ export default function HeroTerminal() {
                   
 {`
  ╔═══════════════════════════════════════════════════════════╗
- ║   BOKEOM EOM  —  DevOps / Cloud Infrastructure Engineer  ║
+ ║   BOKEOM EOM  —  DevOps / Cloud Infrastructure Engineer   ║
  ╚═══════════════════════════════════════════════════════════╝`}
                   </motion.pre>
 

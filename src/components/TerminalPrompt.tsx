@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from "react";
 import { motion } from "framer-motion";
-import { EXPERIENCE, SKILLS, ABOUT_TEXT, CONTACT_INFO, HELP_OUTPUT } from "@/data/terminalData";
+import { EXPERIENCE, SKILLS, ABOUT_TEXT, CONTACT_INFO, HELP_OUTPUT } from "@/constants/terminal";
 
 interface TerminalLine {
   type: "input" | "output";

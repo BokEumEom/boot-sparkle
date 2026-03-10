@@ -34,7 +34,7 @@ export const EXPERIENCE: ExperienceEntry[] = [
     ],
   },
   {
-    company: "Adena Software",
+    company: "AdenaSoftware",
     role: "DevOps Engineer",
     period: "February 2021 - June 2023",
     desc: "Global Fintech",

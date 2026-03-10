@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p /mnt/c/github/boot-sparkle/src/constants && cp /mnt/c/github/boot-sparkle/src/data/terminalData.ts /mnt/c/github/boot-sparkle/src/constants/terminal.ts)",
+      "Bash(grep -n \"&&\\\\|useEffect\\\\|useMemo\\\\|useCallback\" src/components/*.tsx src/pages/*.tsx)",
+      "Bash(grep -n \"FormProvider\\\\|useForm\\\\|schema\" src/components/*.tsx src/pages/*.tsx)",
+      "Bash(grep -n \"any\\\\|TODO\\\\|FIXME\\\\|console\\\\.\" src/components/*.tsx src/pages/*.tsx 2>/dev/null | head -30)",
+      "Bash(grep -n \"console\\\\|debugger\\\\|@ts-ignore\\\\|any\" src/**/*.tsx src/**/*.ts 2>/dev/null | grep -v \"node_modules\")",
+      "Bash(wc -l src/components/ui/* | tail -5)",
+      "Bash(grep -n \"key=\" src/components/*.tsx | head -20)",
+      "Bash(grep -h \"^import\\\\|^export\" /mnt/c/github/boot-sparkle/src/App.tsx /mnt/c/github/boot-sparkle/src/components/*.tsx /mnt/c/github/boot-sparkle/src/pages/*.tsx /mnt/c/github/boot-sparkle/src/main.tsx 2>/dev/null | sort -u)",
+      "Bash(grep -h \"^import\\\\|^export\" /mnt/c/github/boot-sparkle/src/hooks/*.tsx /mnt/c/github/boot-sparkle/src/hooks/*.ts /mnt/c/github/boot-sparkle/src/lib/*.ts /mnt/c/github/boot-sparkle/src/constants/*.ts 2>/dev/null | sort -u)",
+      "Bash(grep -h \"^import\" /mnt/c/github/boot-sparkle/src/components/ui/*.tsx | sort -u)",
+      "Bash(while read f)",
+      "Bash(do echo '=== $f ===')",
+      "Read(//mnt/c/github/boot-sparkle/**)",
+      "Bash(grep \"^import\" /mnt/c/github/boot-sparkle/src/components/ui/*.tsx | cut -d: -f2 | sort -u | head -60)",
+      "Bash(grep \"^import\" /mnt/c/github/boot-sparkle/src/components/ui/*.tsx | cut -d: -f2 | sort -u | tail -20)",
+      "Bash(npm uninstall @tanstack/react-query react-hook-form @hookform/resolvers recharts date-fns react-day-picker embla-carousel-react input-otp cmdk vaul react-resizable-panels @radix-ui/react-accordion @radix-ui/react-alert-dialog @radix-ui/react-aspect-ratio @radix-ui/react-avatar @radix-ui/react-checkbox @radix-ui/react-collapsible @radix-ui/react-context-menu @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-hover-card @radix-ui/react-label @radix-ui/react-menubar @radix-ui/react-navigation-menu @radix-ui/react-popover @radix-ui/react-progress @radix-ui/react-radio-group @radix-ui/react-scroll-area @radix-ui/react-select @radix-ui/react-separator @radix-ui/react-slider @radix-ui/react-slot @radix-ui/react-switch @radix-ui/react-tabs @radix-ui/react-toggle @radix-ui/react-toggle-group zod 2>&1 | tail -5)",
+      "Bash(npm run build 2>&1 | tail -20)",
+      "Bash(npx tsc --noEmit 2>&1)"
+    ]
+  }
+}
