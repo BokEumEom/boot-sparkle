@@ -1,112 +1,17 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from "react";
 import { motion } from "framer-motion";
-
-const EXPERIENCE = [
-  {
-    company: "Bright Energy Partners",
-    role: "DevOps Engineer",
-    period: "June 2023 - Present",
-    desc: "Energy Platform Startup · AWS Infrastructure & Automation",
-    highlights: [
-      "Terraform IaC across dev/stage/prod",
-      "S3 + CloudFront frontend architecture",
-      "AWS WAF with OWASP Top 10 rules",
-      "ECS Fargate microservices + Secrets Manager",
-      "GitLab CI/CD: Docker → ECR → ECS",
-      "CloudWatch → OpenSearch log pipeline",
-      "Monitoring: CloudWatch, Sentry, SigNoz, Datadog",
-    ],
-  },
-  {
-    company: "Adena Software",
-    role: "DevOps Engineer",
-    period: "Feb 2021 - June 2023",
-    desc: "Global Fintech",
-    highlights: [
-      "Terraform IaC + reusable modules on Terraform Cloud",
-      "CloudFront + Lambda@Edge image pipeline",
-      "CDC pipeline: MSK + Kafka Connect + Confluent",
-      "Centralized logging: CloudWatch → OpenSearch/Kibana",
-    ],
-  },
-  {
-    company: "HelloNature",
-    role: "Systems Engineer",
-    period: "Dec 2019 - Nov 2020",
-    desc: "Online Organic Fresh Food Delivery",
-    highlights: [
-      "Prometheus + Grafana monitoring",
-      "Elastic Stack + CloudWatch Logs pipeline",
-      "New Relic + Pinpoint APM",
-    ],
-  },
-  {
-    company: "Perfect World Korea",
-    role: "Systems Engineer",
-    period: "Aug 2015 - Nov 2019",
-    desc: "Mobile Game Services",
-    highlights: [
-      "130 IDC Dell servers management",
-      "VMware ESXi & XenServer virtualization",
-      "Zabbix monitoring system",
-    ],
-  },
-  {
-    company: "Infranics",
-    role: "Systems Engineer",
-    period: "May 2013 - Dec 2014",
-    desc: "Samsung SDS Cloud · AWS Managed Services",
-    highlights: ["AWS infrastructure ops (EC2, EBS, S3, ELB, RDS)"],
-  },
-  {
-    company: "Unitrons Systems",
-    role: "Systems Engineer",
-    period: "Apr 2011 - May 2013",
-    desc: "Public Institutions Server Support",
-    highlights: ["Solaris/Fujitsu server construction", "NetBackup & Veritas Cluster"],
-  },
-];
-
-const SKILLS = {
-  "Cloud & IaC": "AWS (VPC, EC2, RDS, S3, ECS, Lambda, CloudFront, WAF, MSK...) · Terraform · Terraform Cloud · VMware ESXi · XenServer",
-  "CI/CD & Containers": "GitLab CI/CD · AWS CodePipeline · CodeBuild · CodeDeploy · Docker · ECR · ECS Fargate",
-  "Monitoring & Logging": "CloudWatch · Datadog · Sentry · SigNoz · Prometheus · Grafana · Zabbix · Elastic Stack · OpenSearch · Kafka · MSK",
-  "Infrastructure & OS": "Linux (CentOS, Ubuntu, Amazon Linux 2) · Windows · Solaris · Apache · Nginx · Tomcat · NetBackup · Veritas",
-};
-
-const ABOUT_TEXT = `DevOps / Cloud Infrastructure Engineer with 15+ years of experience
-across on-premises, virtualization, and cloud environments.
-
-Started as a Solaris and x86 systems engineer, then evolved into
-AWS-focused infrastructure design and DevOps automation.
-
-Currently building production-grade AWS infrastructure — from IaC
-with Terraform to ECS Fargate microservices, CI/CD pipelines,
-centralized logging, security automation, and cost optimization.`;
-
-const CONTACT_INFO = [
-  { label: "Email", value: "bokmail83@gmail.com" },
-  { label: "Blog", value: "https://blog.naver.com/bokmail83" },
-  { label: "X", value: "https://x.com/bokeum" },
-  { label: "Threads", value: "https://www.threads.com/@geumverse_ai" },
-];
-
-const HELP_OUTPUT = [
-  { cmd: "about", desc: "Who I am and what I do" },
-  { cmd: "experience", desc: "Work history & roles" },
-  { cmd: "skills", desc: "Tech stack & proficiencies" },
-  { cmd: "contact", desc: "Get in touch" },
-  { cmd: "education", desc: "Academic background" },
-  { cmd: "hobbies", desc: "A little more about me" },
-  { cmd: "clear", desc: "Clear terminal" },
-];
+import { EXPERIENCE, SKILLS, ABOUT_TEXT, CONTACT_INFO, HELP_OUTPUT } from "@/data/terminalData";
 
 interface TerminalLine {
   type: "input" | "output";
   content: string | React.ReactNode;
 }
 
-export default function TerminalPrompt() {
+export interface TerminalPromptHandle {
+  runCommand: (cmd: string) => void;
+}
+
+const TerminalPrompt = forwardRef<TerminalPromptHandle>(function TerminalPrompt(_, ref) {
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<TerminalLine[]>([]);
   const [cmdHistory, setCmdHistory] = useState<string[]>([]);
@@ -170,18 +75,14 @@ export default function TerminalPrompt() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const trimmed = input.trim().toLowerCase();
+  const runCommand = (cmd: string) => {
+    const trimmed = cmd.trim().toLowerCase();
     if (!trimmed) return;
-
     if (trimmed === "clear") {
       setHistory([]);
-      setInput("");
       setCmdIndex(-1);
       return;
     }
-
     const output = processCommand(trimmed);
     setHistory((prev) => [
       ...prev,
@@ -190,13 +91,20 @@ export default function TerminalPrompt() {
     ]);
     setCmdHistory((prev) => [...prev, trimmed]);
     setCmdIndex(-1);
+  };
+
+  useImperativeHandle(ref, () => ({ runCommand }));
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    runCommand(input);
     setInput("");
   };
 
   return (
     <div
       ref={containerRef}
-      className="w-full max-h-64 overflow-y-auto"
+      className="w-full max-h-96 overflow-y-auto"
       onClick={() => inputRef.current?.focus()}
     >
       {history.map((line, i) => (
@@ -233,7 +141,9 @@ export default function TerminalPrompt() {
       </form>
     </div>
   );
-}
+});
+
+export default TerminalPrompt;
 
 function PromptLine({ text }: { text: string }) {
   return (

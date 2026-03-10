@@ -1,12 +1,13 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import BootSequence from "@/components/BootSequence";
-import TerminalPrompt from "@/components/TerminalPrompt";
-import { Download, Briefcase, FolderOpen } from "lucide-react";
+import TerminalPrompt, { type TerminalPromptHandle } from "@/components/TerminalPrompt";
+import { Download, Briefcase, Mail } from "lucide-react";
 
 export default function HeroTerminal() {
   const [booted, setBooted] = useState(false);
   const handleBootComplete = useCallback(() => setBooted(true), []);
+  const terminalRef = useRef<TerminalPromptHandle>(null);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center p-4 sm:p-6 overflow-hidden">
@@ -19,7 +20,7 @@ export default function HeroTerminal() {
       </div>
 
       <motion.div
-        className="relative z-20 w-full max-w-3xl"
+        className="relative z-20 w-full max-w-5xl"
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6 }}>
@@ -39,7 +40,7 @@ export default function HeroTerminal() {
           </div>
 
           {/* Terminal body */}
-          <div className="p-4 sm:p-6 min-h-[420px] flex flex-col">
+          <div className="p-5 sm:p-8 min-h-[560px] flex flex-col">
             <AnimatePresence mode="wait">
               {!booted ?
               <motion.div key="boot" exit={{ opacity: 0 }}>
@@ -55,7 +56,7 @@ export default function HeroTerminal() {
                 
                   {/* ASCII header */}
                   <motion.pre
-                  className="text-foreground text-glow text-[9px] sm:text-xs leading-tight"
+                  className="text-foreground text-glow text-[10px] sm:text-sm leading-tight"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.8 }}>
@@ -73,7 +74,7 @@ export default function HeroTerminal() {
                   transition={{ delay: 0.4, duration: 0.5 }}
                   className="space-y-2">
                   
-                    <p className="text-sm sm:text-base text-muted-foreground">
+                    <p className="text-base sm:text-lg text-muted-foreground">
                       <span className="text-terminal-cyan">→</span>{" "}
                       15+ years building production-grade AWS infrastructure, from IaC to microservices.
                     </p>
@@ -90,7 +91,7 @@ export default function HeroTerminal() {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.6 }}>
                   
-                    <TerminalPrompt />
+                    <TerminalPrompt ref={terminalRef} />
                   </motion.div>
 
                   {/* CTA Buttons */}
@@ -100,9 +101,9 @@ export default function HeroTerminal() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8, duration: 0.5 }}>
                   
-                    <TerminalButton icon={<Briefcase size={14} />} label="View Experience" />
-                    <TerminalButton icon={<FolderOpen size={14} />} label="View Projects" />
-                    <TerminalButton icon={<Download size={14} />} label="Download CV" variant="accent" />
+                    <TerminalButton icon={<Briefcase size={14} />} label="View Experience" onClick={() => terminalRef.current?.runCommand("experience")} />
+                    <TerminalButton icon={<Mail size={14} />} label="View Contact" onClick={() => terminalRef.current?.runCommand("contact")} />
+                    <TerminalButton icon={<Download size={14} />} label="Download CV" variant="accent" onClick={() => window.open("https://BokEumEom.github.io", "_blank")} />
                   </motion.div>
                 </motion.div>
               }
@@ -130,18 +131,20 @@ export default function HeroTerminal() {
 function TerminalButton({
   icon,
   label,
-  variant = "default"
+  variant = "default",
+  onClick
 
 
 
 
-}: {icon: React.ReactNode;label: string;variant?: "default" | "accent";}) {
+}: {icon: React.ReactNode;label: string;variant?: "default" | "accent";onClick?: () => void;}) {
   return (
     <motion.button
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
+      onClick={onClick}
       className={`
-        flex items-center gap-2 px-4 py-2 rounded text-xs sm:text-sm font-mono
+        flex items-center gap-2 px-4 py-2 rounded text-sm sm:text-base font-mono
         border transition-colors duration-200
         ${
       variant === "accent" ?
