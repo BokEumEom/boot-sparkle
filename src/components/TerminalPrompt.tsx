@@ -191,7 +191,7 @@ function ExperienceOutput() {
   return (
     <div className="space-y-4">
       <div className="text-terminal-amber mb-1 text-xs uppercase tracking-widest">Experience</div>
-      {EXPERIENCE.map((exp, i) => (
+      {[...EXPERIENCE].reverse().map((exp, i) => (
         <div key={i} className="border-l-2 border-border pl-3">
           <div className="flex flex-wrap items-baseline gap-2">
             <span className="text-terminal-cyan font-semibold text-sm">{exp.company}</span>
