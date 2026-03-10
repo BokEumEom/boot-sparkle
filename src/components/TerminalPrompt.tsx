@@ -1,25 +1,116 @@
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 
+const EXPERIENCE = [
+  {
+    company: "Bright Energy Partners",
+    role: "DevOps Engineer",
+    period: "June 2023 - Present",
+    desc: "Energy Platform Startup · AWS Infrastructure & Automation",
+    highlights: [
+      "Terraform IaC across dev/stage/prod",
+      "S3 + CloudFront frontend architecture",
+      "AWS WAF with OWASP Top 10 rules",
+      "ECS Fargate microservices + Secrets Manager",
+      "GitLab CI/CD: Docker → ECR → ECS",
+      "CloudWatch → OpenSearch log pipeline",
+      "Monitoring: CloudWatch, Sentry, SigNoz, Datadog",
+    ],
+  },
+  {
+    company: "Adena Software",
+    role: "DevOps Engineer",
+    period: "Feb 2021 - June 2023",
+    desc: "Global Fintech",
+    highlights: [
+      "Terraform IaC + reusable modules on Terraform Cloud",
+      "CloudFront + Lambda@Edge image pipeline",
+      "CDC pipeline: MSK + Kafka Connect + Confluent",
+      "Centralized logging: CloudWatch → OpenSearch/Kibana",
+    ],
+  },
+  {
+    company: "HelloNature",
+    role: "Systems Engineer",
+    period: "Dec 2019 - Nov 2020",
+    desc: "Online Organic Fresh Food Delivery",
+    highlights: [
+      "Prometheus + Grafana monitoring",
+      "Elastic Stack + CloudWatch Logs pipeline",
+      "New Relic + Pinpoint APM",
+    ],
+  },
+  {
+    company: "Perfect World Korea",
+    role: "Systems Engineer",
+    period: "Aug 2015 - Nov 2019",
+    desc: "Mobile Game Services",
+    highlights: [
+      "130 IDC Dell servers management",
+      "VMware ESXi & XenServer virtualization",
+      "Zabbix monitoring system",
+    ],
+  },
+  {
+    company: "Infranics",
+    role: "Systems Engineer",
+    period: "May 2013 - Dec 2014",
+    desc: "Samsung SDS Cloud · AWS Managed Services",
+    highlights: ["AWS infrastructure ops (EC2, EBS, S3, ELB, RDS)"],
+  },
+  {
+    company: "Unitrons Systems",
+    role: "Systems Engineer",
+    period: "Apr 2011 - May 2013",
+    desc: "Public Institutions Server Support",
+    highlights: ["Solaris/Fujitsu server construction", "NetBackup & Veritas Cluster"],
+  },
+];
+
+const SKILLS = {
+  "Cloud & IaC": "AWS (VPC, EC2, RDS, S3, ECS, Lambda, CloudFront, WAF, MSK...) · Terraform · Terraform Cloud · VMware ESXi · XenServer",
+  "CI/CD & Containers": "GitLab CI/CD · AWS CodePipeline · CodeBuild · CodeDeploy · Docker · ECR · ECS Fargate",
+  "Monitoring & Logging": "CloudWatch · Datadog · Sentry · SigNoz · Prometheus · Grafana · Zabbix · Elastic Stack · OpenSearch · Kafka · MSK",
+  "Infrastructure & OS": "Linux (CentOS, Ubuntu, Amazon Linux 2) · Windows · Solaris · Apache · Nginx · Tomcat · NetBackup · Veritas",
+};
+
+const ABOUT_TEXT = `DevOps / Cloud Infrastructure Engineer with 15+ years of experience
+across on-premises, virtualization, and cloud environments.
+
+Started as a Solaris and x86 systems engineer, then evolved into
+AWS-focused infrastructure design and DevOps automation.
+
+Currently building production-grade AWS infrastructure — from IaC
+with Terraform to ECS Fargate microservices, CI/CD pipelines,
+centralized logging, security automation, and cost optimization.`;
+
+const CONTACT_INFO = [
+  { label: "Email", value: "bokmail83@gmail.com" },
+  { label: "Blog", value: "https://blog.naver.com/bokmail83" },
+  { label: "X", value: "https://x.com/bokeum" },
+  { label: "Threads", value: "https://www.threads.com/@geumverse_ai" },
+];
+
 const HELP_OUTPUT = [
-  { cmd: "about", desc: "Who am I and what I do" },
+  { cmd: "about", desc: "Who I am and what I do" },
   { cmd: "experience", desc: "Work history & roles" },
-  { cmd: "projects", desc: "Featured builds & side projects" },
   { cmd: "skills", desc: "Tech stack & proficiencies" },
   { cmd: "contact", desc: "Get in touch" },
-  { cmd: "download-cv", desc: "Download my résumé as PDF" },
+  { cmd: "education", desc: "Academic background" },
+  { cmd: "hobbies", desc: "A little more about me" },
   { cmd: "clear", desc: "Clear terminal" },
 ];
 
 interface TerminalLine {
-  type: "input" | "output" | "error";
-  content: string;
+  type: "input" | "output";
+  content: string | React.ReactNode;
 }
 
 export default function TerminalPrompt() {
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<TerminalLine[]>([]);
-  const [showHelp, setShowHelp] = useState(false);
+  const [cmdHistory, setCmdHistory] = useState<string[]>([]);
+  const [cmdIndex, setCmdIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -33,40 +124,81 @@ export default function TerminalPrompt() {
     }
   }, [history]);
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (cmdHistory.length > 0) {
+        const newIdx = cmdIndex < cmdHistory.length - 1 ? cmdIndex + 1 : cmdIndex;
+        setCmdIndex(newIdx);
+        setInput(cmdHistory[cmdHistory.length - 1 - newIdx]);
+      }
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (cmdIndex > 0) {
+        const newIdx = cmdIndex - 1;
+        setCmdIndex(newIdx);
+        setInput(cmdHistory[cmdHistory.length - 1 - newIdx]);
+      } else {
+        setCmdIndex(-1);
+        setInput("");
+      }
+    }
+  };
+
+  const processCommand = (cmd: string): React.ReactNode => {
+    switch (cmd) {
+      case "help":
+        return <HelpTable />;
+      case "about":
+        return <AboutOutput />;
+      case "experience":
+        return <ExperienceOutput />;
+      case "skills":
+        return <SkillsOutput />;
+      case "contact":
+        return <ContactOutput />;
+      case "education":
+        return <EducationOutput />;
+      case "hobbies":
+        return <HobbiesOutput />;
+      default:
+        return (
+          <div className="text-terminal-red">
+            Command not found: '{cmd}'. Type <span className="text-terminal-cyan">'help'</span> for available commands.
+          </div>
+        );
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = input.trim().toLowerCase();
     if (!trimmed) return;
 
-    const newHistory: TerminalLine[] = [
-      ...history,
-      { type: "input", content: trimmed },
-    ];
-
-    if (trimmed === "help") {
-      setShowHelp(true);
-      newHistory.push({
-        type: "output",
-        content: "HELP_TABLE",
-      });
-    } else if (trimmed === "clear") {
+    if (trimmed === "clear") {
       setHistory([]);
       setInput("");
-      setShowHelp(false);
+      setCmdIndex(-1);
       return;
-    } else {
-      newHistory.push({
-        type: "output",
-        content: `Section "${trimmed}" coming soon. Type 'help' for available commands.`,
-      });
     }
 
-    setHistory(newHistory);
+    const output = processCommand(trimmed);
+    setHistory((prev) => [
+      ...prev,
+      { type: "input", content: trimmed },
+      { type: "output", content: output },
+    ]);
+    setCmdHistory((prev) => [...prev, trimmed]);
+    setCmdIndex(-1);
     setInput("");
   };
 
   return (
-    <div ref={containerRef} className="w-full max-h-48 overflow-y-auto">
+    <div
+      ref={containerRef}
+      className="w-full max-h-64 overflow-y-auto"
+      onClick={() => inputRef.current?.focus()}
+    >
       {history.map((line, i) => (
         <motion.div
           key={i}
@@ -76,60 +208,151 @@ export default function TerminalPrompt() {
           className="mb-1"
         >
           {line.type === "input" ? (
-            <div className="flex items-center gap-2">
-              <span className="text-terminal-cyan">visitor</span>
-              <span className="text-terminal-dim">@</span>
-              <span className="text-terminal-amber">portfolio</span>
-              <span className="text-terminal-dim">:~$</span>
-              <span className="text-foreground ml-1">{line.content}</span>
-            </div>
-          ) : line.content === "HELP_TABLE" ? (
-            <HelpTable />
+            <PromptLine text={line.content as string} />
           ) : (
-            <div className="text-muted-foreground pl-2">{line.content}</div>
+            <div className="pl-0 sm:pl-2 my-2">{line.content}</div>
           )}
         </motion.div>
       ))}
 
       <form onSubmit={handleSubmit} className="flex items-center gap-2">
-        <span className="text-terminal-cyan">visitor</span>
-        <span className="text-terminal-dim">@</span>
-        <span className="text-terminal-amber">portfolio</span>
-        <span className="text-terminal-dim">:~$</span>
-        <div className="flex-1 relative ml-1">
-          <input
-            ref={inputRef}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="bg-transparent border-none outline-none text-foreground w-full caret-primary font-mono text-sm"
-            spellCheck={false}
-            autoComplete="off"
-            placeholder={history.length === 0 ? 'type "help" to get started' : ""}
-          />
-        </div>
+        <span className="text-terminal-cyan shrink-0">bokeom</span>
+        <span className="text-terminal-dim shrink-0">@</span>
+        <span className="text-terminal-amber shrink-0">portfolio</span>
+        <span className="text-terminal-dim shrink-0">:~$</span>
+        <input
+          ref={inputRef}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+          className="flex-1 bg-transparent border-none outline-none text-foreground caret-primary font-mono text-sm ml-1 min-w-0"
+          spellCheck={false}
+          autoComplete="off"
+          placeholder={history.length === 0 ? 'type "help" to get started' : ""}
+        />
       </form>
+    </div>
+  );
+}
+
+function PromptLine({ text }: { text: string }) {
+  return (
+    <div className="flex items-center gap-2 flex-wrap">
+      <span className="text-terminal-cyan">bokeom</span>
+      <span className="text-terminal-dim">@</span>
+      <span className="text-terminal-amber">portfolio</span>
+      <span className="text-terminal-dim">:~$</span>
+      <span className="text-foreground ml-1">{text}</span>
     </div>
   );
 }
 
 function HelpTable() {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="my-2 pl-2"
-    >
+    <div>
       <div className="text-terminal-amber mb-2 text-xs uppercase tracking-widest">
         Available Commands
       </div>
       <div className="grid gap-1">
         {HELP_OUTPUT.map((item) => (
           <div key={item.cmd} className="flex gap-4 text-sm">
-            <span className="text-terminal-cyan w-28 shrink-0">{item.cmd}</span>
+            <span className="text-terminal-cyan w-24 shrink-0">{item.cmd}</span>
             <span className="text-terminal-dim">{item.desc}</span>
           </div>
         ))}
       </div>
-    </motion.div>
+    </div>
+  );
+}
+
+function AboutOutput() {
+  return (
+    <div>
+      <div className="text-terminal-amber mb-2 text-xs uppercase tracking-widest">About Me</div>
+      <pre className="text-sm text-foreground/90 whitespace-pre-wrap leading-relaxed">{ABOUT_TEXT}</pre>
+      <div className="mt-3 text-xs text-terminal-dim">
+        Most skilled in: <span className="text-terminal-cyan">AWS</span> and <span className="text-terminal-cyan">DevOps Automation</span>
+      </div>
+    </div>
+  );
+}
+
+function ExperienceOutput() {
+  return (
+    <div className="space-y-4">
+      <div className="text-terminal-amber mb-1 text-xs uppercase tracking-widest">Experience</div>
+      {EXPERIENCE.map((exp, i) => (
+        <div key={i} className="border-l-2 border-border pl-3">
+          <div className="flex flex-wrap items-baseline gap-2">
+            <span className="text-terminal-cyan font-semibold text-sm">{exp.company}</span>
+            <span className="text-terminal-dim text-xs">·</span>
+            <span className="text-foreground text-sm">{exp.role}</span>
+          </div>
+          <div className="text-terminal-dim text-xs">{exp.period}</div>
+          <div className="text-muted-foreground text-xs mt-0.5">{exp.desc}</div>
+          <ul className="mt-1 space-y-0.5">
+            {exp.highlights.map((h, j) => (
+              <li key={j} className="text-xs text-foreground/80">
+                <span className="text-terminal-dim mr-1">▸</span>{h}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function SkillsOutput() {
+  return (
+    <div className="space-y-3">
+      <div className="text-terminal-amber mb-1 text-xs uppercase tracking-widest">Skills</div>
+      {Object.entries(SKILLS).map(([category, techs]) => (
+        <div key={category}>
+          <span className="text-terminal-cyan text-sm font-semibold">{category}</span>
+          <div className="text-xs text-foreground/80 mt-0.5 pl-2">{techs}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ContactOutput() {
+  return (
+    <div>
+      <div className="text-terminal-amber mb-2 text-xs uppercase tracking-widest">Contact</div>
+      <div className="grid gap-1">
+        {CONTACT_INFO.map((c) => (
+          <div key={c.label} className="flex gap-4 text-sm">
+            <span className="text-terminal-cyan w-20 shrink-0">{c.label}</span>
+            <span className="text-foreground/90">{c.value}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function EducationOutput() {
+  return (
+    <div>
+      <div className="text-terminal-amber mb-2 text-xs uppercase tracking-widest">Education</div>
+      <div className="text-terminal-cyan text-sm font-semibold">Hankyong National University</div>
+      <div className="text-foreground/90 text-sm">B.E. in Information Control Engineering</div>
+      <div className="text-terminal-dim text-xs">2007 - 2018</div>
+    </div>
+  );
+}
+
+function HobbiesOutput() {
+  return (
+    <div>
+      <div className="text-terminal-amber mb-2 text-xs uppercase tracking-widest">Hobbies</div>
+      <div className="flex flex-wrap gap-3 text-sm">
+        {["⚽ Soccer", "🎬 Watching movies", "🏓 Ping-pong", "🎾 Tennis"].map((h) => (
+          <span key={h} className="text-foreground/80 bg-secondary/50 px-2 py-0.5 rounded text-xs">{h}</span>
+        ))}
+      </div>
+    </div>
   );
 }

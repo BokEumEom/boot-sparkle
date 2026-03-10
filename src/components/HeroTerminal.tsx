@@ -34,12 +34,12 @@ export default function HeroTerminal() {
               <div className="w-3 h-3 rounded-full bg-foreground/60" />
             </div>
             <span className="text-xs text-terminal-dim ml-2 tracking-wide">
-              portfolio — bash — 80×24
+              bokeom@portfolio — bash — 80×24
             </span>
           </div>
 
           {/* Terminal body */}
-          <div className="p-4 sm:p-6 min-h-[400px] flex flex-col">
+          <div className="p-4 sm:p-6 min-h-[420px] flex flex-col">
             <AnimatePresence mode="wait">
               {!booted ? (
                 <motion.div key="boot" exit={{ opacity: 0 }}>
@@ -51,22 +51,20 @@ export default function HeroTerminal() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className="flex flex-col gap-6 flex-1"
+                  className="flex flex-col gap-5 flex-1"
                 >
-                  {/* ASCII-style header */}
-                  <div>
-                    <motion.pre
-                      className="text-foreground text-glow text-[10px] sm:text-xs leading-tight"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.8 }}
-                    >
+                  {/* ASCII header */}
+                  <motion.pre
+                    className="text-foreground text-glow text-[9px] sm:text-xs leading-tight"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8 }}
+                  >
 {`
- ╔══════════════════════════════════════════╗
- ║   JOHN DOE  —  Full-Stack Developer     ║
- ╚══════════════════════════════════════════╝`}
-                    </motion.pre>
-                  </div>
+ ╔═══════════════════════════════════════════════════════════╗
+ ║   BOKEOM EOM  —  DevOps / Cloud Infrastructure Engineer  ║
+ ╚═══════════════════════════════════════════════════════════╝`}
+                  </motion.pre>
 
                   {/* Tagline */}
                   <motion.div
@@ -77,14 +75,13 @@ export default function HeroTerminal() {
                   >
                     <p className="text-sm sm:text-base text-muted-foreground">
                       <span className="text-terminal-cyan">→</span>{" "}
-                      I build performant, beautiful web experiences that users love.
+                      15+ years building production-grade AWS infrastructure, from IaC to microservices.
                     </p>
                     <p className="text-xs text-terminal-dim">
-                      React · TypeScript · Node.js · Cloud Architecture
+                      AWS · Terraform · Docker · ECS Fargate · GitLab CI/CD · Observability
                     </p>
                   </motion.div>
 
-                  {/* Divider */}
                   <div className="border-t border-border/50" />
 
                   {/* Terminal prompt */}
