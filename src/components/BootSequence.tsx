@@ -9,11 +9,11 @@ interface BootLine {
 
 const BOOT_LINES: BootLine[] = [
   { text: "BIOS v3.14.1 — POST Check...", color: "text-terminal-dim", delay: 0 },
-  { text: "[  OK  ] CPU: Creative Problem Solver @ 3.5GHz", color: "text-foreground", delay: 300 },
-  { text: "[  OK  ] RAM: 16GB of Caffeine-Powered Memory", color: "text-foreground", delay: 500 },
-  { text: "[  OK  ] GPU: Pixel-Perfect Rendering Engine", color: "text-foreground", delay: 700 },
-  { text: "[  OK  ] Loading personality module...", color: "text-foreground", delay: 900 },
-  { text: "[  OK  ] Mounting /dev/portfolio", color: "text-foreground", delay: 1100 },
+  { text: "[  OK  ] CPU: DevOps Problem Solver @ 15yrs Experience", color: "text-foreground", delay: 300 },
+  { text: "[  OK  ] RAM: AWS Cloud Infrastructure Loaded", color: "text-foreground", delay: 500 },
+  { text: "[  OK  ] GPU: Terraform IaC Rendering Engine", color: "text-foreground", delay: 700 },
+  { text: "[  OK  ] Loading DevOps automation modules...", color: "text-foreground", delay: 900 },
+  { text: "[  OK  ] Mounting /dev/portfolio — Bokeom Eom", color: "text-foreground", delay: 1100 },
   { text: "", delay: 1300 },
   { text: "System ready. Welcome.", color: "text-terminal-amber", delay: 1500 },
 ];
