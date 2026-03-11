@@ -93,7 +93,7 @@ export default function HeroTerminal() {
                   
                     <TerminalButton icon={<Briefcase size={14} />} label="View Experience" onClick={() => terminalRef.current?.runCommand("experience")} />
                     <TerminalButton icon={<Mail size={14} />} label="View Contact" onClick={() => terminalRef.current?.runCommand("contact")} />
-                    <TerminalButton icon={<Download size={14} />} label="Download CV" variant="accent" onClick={() => window.open("https://BokEumEom.github.io", "_blank")} />
+                    <TerminalButton icon={<Download size={14} />} label="Download CV" variant="accent" onClick={() => window.open("/cv", "_blank")} />
                   </motion.div>
                 </motion.div>
               }

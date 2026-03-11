@@ -78,7 +78,7 @@ export const EXPERIENCE: ExperienceEntry[] = [
   },
   {
     company: "Infranics",
-    role: "Systems Engineer",
+    role: "Cloud Engineer",
     period: "May 2013 - December 2014",
     desc: "Samsung SDS Cloud Business Team · AWS Managed Services (ChatON, etc.)",
     highlights: [
