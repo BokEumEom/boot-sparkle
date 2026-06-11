@@ -248,8 +248,9 @@ function EducationOutput() {
     <div>
       <div className="text-terminal-amber mb-2 text-xs uppercase tracking-widest">Education</div>
       <div className="text-terminal-cyan text-sm font-semibold">Hankyong National University</div>
-      <div className="text-foreground/90 text-sm">B.E. in Information Control Engineering</div>
-      <div className="text-terminal-dim text-xs">2007 - 2018</div>
+      <div className="text-foreground/90 text-sm">B.E. in Information and Control Engineering</div>
+      <div className="text-terminal-cyan text-sm font-semibold mt-2">Incheon Polytechnic College</div>
+      <div className="text-foreground/90 text-sm">Associate Degree in Computer Control</div>
     </div>
   );
 }

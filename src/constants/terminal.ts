@@ -19,30 +19,30 @@ export interface HelpItem {
 export const EXPERIENCE: ExperienceEntry[] = [
   {
     company: "Bright Energy Partners",
-    role: "DevOps Engineer",
+    role: "DevOps / Platform Engineering Lead",
     period: "June 2023 - Present",
-    desc: "Energy Platform Startup · AWS-based Infrastructure Design and Operations Automation",
+    desc: "Energy Platform Startup · AWS-based Infrastructure Design, DevOps Operations, and Operations Automation",
     highlights: [
-      "Standardized AWS infrastructure (VPC, EC2, RDS, S3, ECS, etc.) as IaC using Terraform across dev/stage/prod",
-      "Designed S3 + CloudFront-based frontend architecture with cache and HTTPS optimization",
-      "Configured AWS WAF using Security Automation templates, applying OWASP Top 10 mitigation rules",
-      "Operated ECS Fargate microservices with Service Connect; integrated Secrets Manager and SSM Parameter Store",
-      "Built GitLab CI/CD pipeline: Docker Build → ECR Push → ECS Service Update; migrated from CodePipeline",
-      "Built CloudWatch Logs → OpenSearch streaming pipeline for centralized log collection",
-      "Designed monitoring and alerting with CloudWatch Metrics, Sentry, SigNoz, and Datadog",
-      "Implemented Lambda-based auto-alerts to Microsoft Teams for ECS deployment status and Security Group changes",
+      "Standardized core AWS infrastructure as Terraform-based IaC across dev/stage/prod environments",
+      "Operated ECS Fargate microservices in production; strengthened runtime security with centralized secret management (Secrets Manager, SSM Parameter Store)",
+      "Built GitLab-native CI/CD pipelines replacing legacy deployment flows: Docker Build → ECR Push → ECS Service Update",
+      "Established centralized logging and observability with CloudWatch, OpenSearch, Datadog, Sentry, and SigNoz",
+      "Implemented AWS WAF controls and alert automation to improve security posture and infrastructure change visibility",
+      "Designed frontend hosting architecture on S3 + CloudFront to separate frontend delivery from backend release cycles",
+      "Supported AWS cost analysis, infrastructure visibility, and operational improvement activities",
+      "Explored AI-assisted workflows for infrastructure analysis, operational reporting, and technical documentation",
     ],
   },
   {
     company: "AdenaSoftware",
-    role: "DevOps Engineer",
+    role: "DevOps / Infrastructure Engineer",
     period: "February 2021 - June 2023",
-    desc: "Global Fintech",
+    desc: "Global Fintech · AWS Standardization, DevOps Automation, Data Pipelines, Security Automation, Centralized Logging",
     highlights: [
-      "Introduced Terraform IaC for AWS infrastructure; published reusable modules to Terraform Cloud Registry",
+      "Introduced Terraform IaC for AWS standardization; published reusable modules to Terraform Cloud Registry",
       "Implemented real-time image transformation pipeline using CloudFront + Lambda@Edge",
-      "Established CDC pipeline with AWS MSK, Kafka Connect (JDBC/Elasticsearch), and Confluent; managed via AKHQ",
-      "Configured AWS WAF covering HTTP Flood, SQLi, XSS, IP Reputation, and Bad Bot rules",
+      "Established CDC and streaming pipelines with AWS MSK, Kafka Connect (JDBC/Elasticsearch), and Confluent; managed via AKHQ",
+      "Configured AWS WAF (Security Automation templates) covering HTTP Flood, SQLi, XSS, IP Reputation, and Bad Bot rules",
       "Built centralized log pipeline: CloudWatch Logs → OpenSearch with Kibana (VPC Flow, WAF, ALB, app, SES logs)",
       "Configured Apache + PHP 7.4 on Amazon Linux 2; deployed Metabase with Athena integration",
       "Migrated CI/CD from CodePipeline to GitLab-native pipeline: Docker Build → ECR Push → ECS Service Update",
@@ -50,27 +50,28 @@ export const EXPERIENCE: ExperienceEntry[] = [
   },
   {
     company: "HelloNature",
-    role: "Cloud Engineer",
+    role: "Infrastructure / DevOps Engineer",
     period: "December 2019 - November 2020",
-    desc: "Online Organic Fresh Food Dawn Delivery Service",
+    desc: "Fresh Food E-commerce · AWS Infrastructure Operations, Monitoring, Logging, Deployment Support, Service Reliability",
     highlights: [
-      "AWS cloud infrastructure management and operations",
+      "Managed AWS-based production infrastructure",
       "Built monitoring system using Prometheus + Grafana (CPU, memory, disk, network, etc.)",
       "Established log collection pipeline using Elastic Stack + CloudWatch Logs (Tomcat, Apache, Nginx, ELB, etc.)",
       "Configured application monitoring using New Relic + Pinpoint (Apache, PHP, Node.js, Tomcat)",
-      "AWS resource cost analysis and optimization",
+      "Performed AWS resource cost analysis and optimization",
+      "Supported incident analysis, troubleshooting, and technical issue resolution",
       "Operated deployment pipelines using AWS CodeBuild and CodeDeploy",
       "Installed and configured Yona issue tracker",
     ],
   },
   {
     company: "Perfect World Korea",
-    role: "Systems Engineer",
+    role: "System / Infrastructure Engineer",
     period: "August 2015 - November 2019",
-    desc: "Mobile game services including Super Evolution Story, Liehuo, Mushin, Unison League, and more",
+    desc: "Mobile Game Services · On-premises Infrastructure, Cloud Resources, Virtualization, Monitoring, Production Operations",
     highlights: [
-      "Managed and maintained 130 IDC Dell servers",
-      "Managed and operated KT U Cloud Biz",
+      "Managed and maintained 130+ IDC Dell servers",
+      "Managed and operated KT U Cloud Biz environments",
       "Managed VMware ESXi and XenServer virtualization platforms",
       "Linux (CentOS) and Windows systems engineering",
       "Built and operated Zabbix monitoring system",
@@ -78,48 +79,54 @@ export const EXPERIENCE: ExperienceEntry[] = [
   },
   {
     company: "Infranics",
-    role: "Cloud Engineer",
+    role: "Cloud / Systems Engineer",
     period: "May 2013 - December 2014",
-    desc: "Samsung SDS Cloud Business Team · AWS Managed Services (ChatON, etc.)",
+    desc: "Samsung SDS Cloud Business Team · AWS Managed Service Operations and Linux Server Support",
     highlights: [
-      "AWS infrastructure management, operations, and technical support (EC2, EBS, S3, ELB, RDS, etc.)",
+      "Supported AWS infrastructure management, operations, and technical support (EC2, EBS, S3, ELB, RDS, etc.)",
       "Ubuntu server configuration, Software RAID setup, and AWS CLI operations",
     ],
   },
   {
     company: "Unitrons Systems",
-    role: "Systems Engineer",
+    role: "System / Infrastructure Engineer",
     period: "April 2011 - May 2013",
-    desc: "Server construction and technical support for public institutions and government offices",
+    desc: "Public Sector IT Infrastructure · Server, Storage, Backup, Clustering, and Enterprise Infrastructure Support",
     highlights: [
       "Sun Microsystems Solaris server and storage construction and maintenance",
       "Fujitsu server and storage maintenance",
       "Linux and Windows system maintenance",
       "NetBackup technical support",
-      "Veritas Storage Foundation operations",
-      "Veritas Cluster Server technical support",
+      "Veritas Storage Foundation and Veritas Cluster Server operations",
     ],
   },
 ];
 
 export const SKILLS: Record<string, string> = {
-  "Cloud & IaC": "AWS (VPC, EC2, RDS, S3, ECS Fargate, Lambda, CloudFront, WAF, MSK, CodePipeline, Secrets Manager, SSM, etc.) · Terraform · Terraform Cloud · VMware ESXi · XenServer · Hyper-V",
-  "CI/CD & Containers": "GitLab CI/CD · AWS CodePipeline · CodeBuild · CodeDeploy · Docker · Amazon ECR · ECS Fargate",
-  "Monitoring & Logging": "CloudWatch · Datadog · Sentry · SigNoz · Jaeger · Prometheus · Grafana · Zabbix · New Relic · Pinpoint · Elastic Stack · OpenSearch · Kibana · Kafka · AWS MSK · Kafka Connect · AKHQ",
-  "Infrastructure & OS": "Linux (CentOS, Ubuntu, Amazon Linux 2) · Windows · Solaris · Apache · Nginx · Tomcat · PHP · Sun Microsystems (SPARC) · Fujitsu · x86 · NetBackup · Veritas Storage Foundation · Veritas Cluster Server",
+  "Cloud & Infrastructure": "AWS (VPC, EC2, RDS, Aurora MySQL, EBS, S3, ELB, ECS Fargate, Lambda, Lambda@Edge, CloudFront, WAF, MSK, Secrets Manager, SSM Parameter Store, CloudWatch) · Terraform · Terraform Cloud",
+  "CI/CD & Containers": "GitLab CI/CD · AWS CodePipeline · CodeBuild · CodeDeploy · Docker · Amazon ECR · ECS Service Update",
+  "Monitoring & Logging": "CloudWatch · Datadog · Sentry · SigNoz · Jaeger · Prometheus · Grafana · Zabbix · New Relic · Pinpoint · Elastic Stack · OpenSearch · Kibana",
+  "Streaming & Data Pipeline": "Kafka · AWS MSK · Kafka Connect · AKHQ · Confluent · JDBC Connector · Elasticsearch Connector",
+  "Infrastructure & OS": "Linux (CentOS, Ubuntu, Amazon Linux 2) · Windows · Solaris · VMware ESXi · XenServer · Hyper-V",
+  "Web / App Infrastructure": "Apache · Nginx · Tomcat · PHP · Metabase · Athena · Yona",
+  "Backup / Storage / Enterprise": "Sun Microsystems SPARC · Fujitsu Servers · x86 Servers · NetBackup · Veritas Storage Foundation · Veritas Cluster Server",
+  "Backend / Frontend / AI": "MySQL · SQL · FastAPI · SQLAlchemy · REST APIs · React · TypeScript · Tailwind CSS · Svelte · Vercel · Generative AI · AI-Assisted Operations · Prompt Engineering",
 };
 
-export const ABOUT_TEXT = `DevOps / Cloud Infrastructure Engineer with 15+ years of experience
-across on-premises, virtualization, and cloud environments.
+export const ABOUT_TEXT = `AWS-focused DevOps, Platform, and Infrastructure Engineer with
+15+ years of experience across on-premises infrastructure,
+virtualization, and AWS cloud environments.
 
-Started as a Solaris and x86 systems engineer, then evolved into
-AWS-focused infrastructure design and DevOps automation.
+Experienced in building and operating production AWS platforms using
+Terraform, ECS Fargate, GitLab CI/CD, centralized logging, monitoring,
+and security automation. Strong background in infrastructure
+standardization, deployment automation, observability, cloud security
+operations, cost visibility, and production service troubleshooting.
 
-Currently building and operating production-grade AWS infrastructure —
-from IaC with Terraform to ECS Fargate microservices, CI/CD pipelines,
-centralized logging, security automation, and cost optimization.
-Experienced in managing multi-region, multi-account AWS environments
-for fintech and energy platform startups.`;
+Currently working on AWS-based infrastructure and DevOps operations
+for an energy platform startup. Recently exploring AI-assisted
+workflows for infrastructure analysis, operational documentation,
+reporting automation, and service operations.`;
 
 export const CONTACT_INFO: ContactItem[] = [
   { label: "Email", value: "bokmail83@gmail.com" },
@@ -128,6 +135,28 @@ export const CONTACT_INFO: ContactItem[] = [
   { label: "LinkedIn", value: "https://linkedin.com/in/bokeum" },
   { label: "X", value: "https://x.com/bokeum" },
   { label: "Threads", value: "https://www.threads.com/@geumverse_ai" },
+];
+
+export interface EducationEntry {
+  school: string;
+  degree: string;
+  period?: string;
+}
+
+export const EDUCATION: EducationEntry[] = [
+  {
+    school: "Hankyong National University",
+    degree: "B.E. in Information and Control Engineering",
+  },
+  {
+    school: "Incheon Polytechnic College",
+    degree: "Associate Degree in Computer Control",
+  },
+];
+
+export const CERTIFICATIONS: string[] = [
+  "AWS Certified Solutions Architect – Associate",
+  "Sun / Veritas certifications",
 ];
 
 export const HELP_OUTPUT: HelpItem[] = [

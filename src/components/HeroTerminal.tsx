@@ -150,7 +150,7 @@ function TerminalButton({
 
 const ASCII_FULL = `
  ╔═══════════════════════════════════════════════════════════╗
- ║   BOKEOM EOM  —  DevOps / Cloud Infrastructure Engineer   ║
+ ║    BOKEOM EOM  —  AWS-Focused Platform & DevOps Leader    ║
  ╚═══════════════════════════════════════════════════════════╝`;
 
 function AsciiHeader() {

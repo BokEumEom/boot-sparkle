@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { EXPERIENCE, SKILLS, ABOUT_TEXT, CONTACT_INFO } from "@/constants/terminal";
+import { EXPERIENCE, SKILLS, ABOUT_TEXT, CONTACT_INFO, EDUCATION, CERTIFICATIONS } from "@/constants/terminal";
 
 export default function CV() {
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function CV() {
         {/* Header */}
         <header className="border-b-2 border-black pb-4 mb-6">
           <h1 className="text-3xl font-bold tracking-tight">BOKEOM EOM</h1>
-          <p className="text-lg text-gray-600 mt-1">DevOps / Cloud Infrastructure Engineer</p>
+          <p className="text-lg text-gray-600 mt-1">Partner AI Deployment Engineer / AWS-Focused Platform & DevOps Leader</p>
           <div className="flex flex-wrap gap-x-6 gap-y-1 mt-3 text-sm text-gray-700">
             {CONTACT_INFO.map((item) => (
               <span key={item.label}>
@@ -71,7 +71,7 @@ export default function CV() {
         </section>
 
         {/* Skills */}
-        <section>
+        <section className="mb-6">
           <h2 className="text-lg font-bold uppercase tracking-widest border-b border-gray-300 pb-1 mb-3">
             Skills
           </h2>
@@ -80,6 +80,37 @@ export default function CV() {
               <div key={category} className="text-sm">
                 <span className="font-bold">{category}: </span>
                 <span className="text-gray-700">{value}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Certifications */}
+        <section className="mb-6" style={{ pageBreakInside: "avoid" }}>
+          <h2 className="text-lg font-bold uppercase tracking-widest border-b border-gray-300 pb-1 mb-3">
+            Certifications
+          </h2>
+          <ul className="space-y-1">
+            {CERTIFICATIONS.map((cert) => (
+              <li key={cert} className="text-sm text-gray-700 flex gap-2">
+                <span className="shrink-0 text-gray-400">•</span>
+                <span>{cert}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* Education */}
+        <section style={{ pageBreakInside: "avoid" }}>
+          <h2 className="text-lg font-bold uppercase tracking-widest border-b border-gray-300 pb-1 mb-3">
+            Education
+          </h2>
+          <div className="space-y-2">
+            {EDUCATION.map((edu) => (
+              <div key={edu.school} className="text-sm">
+                <span className="font-bold">{edu.school}</span>
+                <span className="mx-2 text-gray-400">·</span>
+                <span className="text-gray-700">{edu.degree}</span>
               </div>
             ))}
           </div>
